@@ -16,7 +16,7 @@
     <header class="topbar">
       <div class="brand">
         <span class="brand-mark">&lt;/&gt;</span>
-        <span>CYBERSHIELD</span>
+        <span>CYBERSHIELDS</span>
       </div>
 
       <nav class="nav">
@@ -26,7 +26,7 @@
         <a href="#">Logs</a>
       </nav>
 
-      <button class="status-pill">Sistema activo</button>
+      <button id="status-pill" class="status-pill" type="button" data-active="true">Sistema activo</button>
     </header>
 
     <section class="hero">
@@ -43,8 +43,8 @@
         </p>
 
         <div class="cta-row">
-          <button class="primary-btn">Ejecutar escaneo</button>
-          <button class="secondary-btn">Ver logs</button>
+          <button id="scan-btn" class="primary-btn" type="button">Ejecutar escaneo</button>
+          <button id="logs-btn" class="secondary-btn" type="button">Ver logs</button>
         </div>
 
         <div class="stats">
@@ -61,9 +61,14 @@
             <span>Brechas bloqueadas</span>
           </article>
         </div>
+
+        <div class="system-note">
+          <span class="note-label">Status</span>
+          <strong>Protección activa en tiempo real</strong>
+        </div>
       </div>
 
-      <div class="terminal-panel">
+      <div id="terminal-panel" class="terminal-panel">
         <div class="panel-header">
           <span class="dot red"></span>
           <span class="dot yellow"></span>
@@ -71,7 +76,7 @@
           <span class="panel-title">secure://network</span>
         </div>
 
-        <div class="terminal-body">
+        <div id="terminal-body" class="terminal-body" aria-live="polite">
           <div class="line"><span class="prompt">root@cyber</span>:/secure$ scan --live</div>
           <div class="line green">[OK] Firewall sincronizado</div>
           <div class="line green">[OK] IDS activo en 7 nodos</div>
@@ -114,6 +119,62 @@
       </article>
     </section>
   </main>
+
+  <script>
+    const statusButton = document.getElementById('status-pill');
+    const scanButton = document.getElementById('scan-btn');
+    const logsButton = document.getElementById('logs-btn');
+    const terminalPanel = document.getElementById('terminal-panel');
+    const terminalBody = document.getElementById('terminal-body');
+
+    function appendLog(message, type = '') {
+      const line = document.createElement('div');
+      line.className = `line ${type}`.trim();
+      line.textContent = message;
+      terminalBody.appendChild(line);
+      terminalBody.scrollTop = terminalBody.scrollHeight;
+    }
+
+    statusButton.addEventListener('click', () => {
+      const isActive = statusButton.dataset.active === 'true';
+      statusButton.dataset.active = String(!isActive);
+      statusButton.textContent = isActive ? 'Sistema inactivo' : 'Sistema activo';
+      statusButton.classList.toggle('offline', isActive);
+      appendLog(isActive ? '[OFFLINE] Defensa desactivada temporalmente' : '[OK] Defensa reactivada', isActive ? 'red' : 'green');
+    });
+
+    scanButton.addEventListener('click', () => {
+      scanButton.disabled = true;
+      scanButton.textContent = 'Escaneando...';
+      appendLog('root@cyber:/secure$ scan --live');
+
+      const steps = [
+        { text: '[OK] Firewall sincronizado', type: 'green' },
+        { text: '[OK] IDS activo en 7 nodos', type: 'green' },
+        { text: '[WARN] Intento de acceso anómalo detectado', type: 'yellow' },
+        { text: '[BLOCKED] IP 192.168.47.89 neutralizada', type: 'red' },
+        { text: '[OK] Sistema protegido', type: 'green' }
+      ];
+
+      steps.forEach((step, index) => {
+        setTimeout(() => appendLog(step.text, step.type), (index + 1) * 350);
+      });
+
+      setTimeout(() => {
+        scanButton.disabled = false;
+        scanButton.textContent = 'Ejecutar escaneo';
+      }, 2200);
+    });
+
+    logsButton.addEventListener('click', () => {
+      terminalPanel.classList.toggle('collapsed');
+      const isCollapsed = terminalPanel.classList.contains('collapsed');
+      logsButton.textContent = isCollapsed ? 'Mostrar logs' : 'Ocultar logs';
+      if (!isCollapsed) {
+        terminalPanel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    });
+  </script>
 </body>
 
 </html>
