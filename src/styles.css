@@ -317,6 +317,39 @@ button:disabled {
   text-transform: uppercase;
 }
 
+.connection-card {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 18px;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: rgba(8, 15, 25, 0.8);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 8px 10px;
+  border-radius: 10px;
+  background: rgba(103, 232, 249, 0.04);
+}
+
+.field span {
+  color: var(--muted);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.field strong {
+  color: var(--text);
+  font-size: 0.9rem;
+  word-break: break-word;
+}
+
 .terminal-panel {
   border: 1px solid var(--line);
   border-radius: 20px;

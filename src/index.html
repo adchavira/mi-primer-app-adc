@@ -86,6 +86,21 @@
             <div class="line green">[OK] Sistema protegido</div>
           </div>
         </div>
+
+        <div class="connection-card">
+          <div class="field">
+            <span>IP del cliente</span>
+            <strong id="client-ip">Detectando...</strong>
+          </div>
+          <div class="field">
+            <span>Ubicación</span>
+            <strong id="client-location">Detectando...</strong>
+          </div>
+          <div class="field">
+            <span>Fecha / hora</span>
+            <strong id="client-time">--</strong>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -165,17 +180,41 @@
     const terminalPanel = document.getElementById('terminal-panel');
     const terminalBody = document.getElementById('terminal-body');
     const threatIp = document.getElementById('threat-ip');
+    const clientIp = document.getElementById('client-ip');
+    const clientLocation = document.getElementById('client-location');
+    const clientTime = document.getElementById('client-time');
     const navButtons = document.querySelectorAll('.nav-btn');
     const viewPanels = document.querySelectorAll('.view-panel');
 
-    async function loadClientIp() {
+    async function loadClientInfo() {
+      const timeText = new Date().toLocaleString('es-ES', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit'
+      });
+      clientTime.textContent = timeText;
+
       try {
-        const response = await fetch('https://api.ipify.org?format=json');
-        const data = await response.json();
-        if (data && data.ip) {
-          threatIp.textContent = `[BLOCKED] IP ${data.ip} neutralizada`;
-        }
+        const ipResponse = await fetch('https://api.ipify.org?format=json');
+        const ipData = await ipResponse.json();
+        const ipValue = ipData && ipData.ip ? ipData.ip : 'No disponible';
+
+        clientIp.textContent = ipValue;
+        threatIp.textContent = `[BLOCKED] IP ${ipValue} neutralizada`;
+
+        const locationResponse = await fetch('https://ipapi.co/json/');
+        const locationData = await locationResponse.json();
+        const locationValue = locationData && (locationData.city || locationData.region || locationData.country_name)
+          ? `${locationData.city || 'Desconocida'}, ${locationData.region || ''}, ${locationData.country_name || ''}`.replace(/,\s*$/, '').replace(/,\s+,/g, ',').trim()
+          : 'Ubicación no disponible';
+
+        clientLocation.textContent = locationValue;
       } catch (error) {
+        clientIp.textContent = 'No disponible';
+        clientLocation.textContent = 'No disponible';
         threatIp.textContent = '[BLOCKED] IP del cliente no disponible';
       }
     }
@@ -240,7 +279,7 @@
       });
     });
 
-    loadClientIp();
+    loadClientInfo();
   </script>
 </body>
 
