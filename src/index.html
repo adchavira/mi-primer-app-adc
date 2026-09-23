@@ -19,71 +19,109 @@
         <span>CYBERSHIELDS</span>
       </div>
 
-      <nav class="nav">
-        <a href="#">Inicio</a>
-        <a href="#">Seguridad</a>
-        <a href="#">Mapas</a>
-        <a href="#">Logs</a>
+      <nav class="nav" aria-label="Navegación principal">
+        <button class="nav-btn active" data-view="home" type="button">Inicio</button>
+        <button class="nav-btn" data-view="security" type="button">Seguridad</button>
+        <button class="nav-btn" data-view="maps" type="button">Mapas</button>
+        <button class="nav-btn" data-view="logs" type="button">Logs</button>
       </nav>
 
       <button id="status-pill" class="status-pill" type="button" data-active="true">Sistema activo</button>
     </header>
 
-    <section class="hero">
-      <div class="hero-copy">
-        <p class="eyebrow">MODO DEFENSA / 24/7</p>
-        <h1>
-          Amenazas detectadas.
-          <span>Neutralizadas.</span>
-        </h1>
+    <section id="view-home" class="view-panel active-view">
+      <div class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">MODO DEFENSA / 24/7</p>
+          <h1>
+            Amenazas detectadas.
+            <span>Neutralizadas.</span>
+          </h1>
 
-        <p class="lead">
-          Protegemos tu infraestructura con analítica en tiempo real, detección inteligente y
-          respuesta automática ante cualquier riesgo cibernético.
-        </p>
+          <p class="lead">
+            Protegemos tu infraestructura con analítica en tiempo real, detección inteligente y
+            respuesta automática ante cualquier riesgo cibernético.
+          </p>
 
-        <div class="cta-row">
-          <button id="scan-btn" class="primary-btn" type="button">Ejecutar escaneo</button>
-          <button id="logs-btn" class="secondary-btn" type="button">Ver logs</button>
+          <div class="cta-row">
+            <button id="scan-btn" class="primary-btn" type="button">Ejecutar escaneo</button>
+            <button id="logs-btn" class="secondary-btn" type="button">Ver logs</button>
+          </div>
+
+          <div class="stats">
+            <article>
+              <strong>99.9%</strong>
+              <span>Firewall</span>
+            </article>
+            <article>
+              <strong>12.4k</strong>
+              <span>Eventos / min</span>
+            </article>
+            <article>
+              <strong>3</strong>
+              <span>Brechas bloqueadas</span>
+            </article>
+          </div>
+
+          <div class="system-note">
+            <span class="note-label">Status</span>
+            <strong>Protección activa en tiempo real</strong>
+          </div>
         </div>
 
-        <div class="stats">
-          <article>
-            <strong>99.9%</strong>
-            <span>Firewall</span>
-          </article>
-          <article>
-            <strong>12.4k</strong>
-            <span>Eventos / min</span>
-          </article>
-          <article>
-            <strong>3</strong>
-            <span>Brechas bloqueadas</span>
-          </article>
-        </div>
+        <div id="terminal-panel" class="terminal-panel">
+          <div class="panel-header">
+            <span class="dot red"></span>
+            <span class="dot yellow"></span>
+            <span class="dot green"></span>
+            <span class="panel-title">secure://network</span>
+          </div>
 
-        <div class="system-note">
-          <span class="note-label">Status</span>
-          <strong>Protección activa en tiempo real</strong>
+          <div id="terminal-body" class="terminal-body" aria-live="polite">
+            <div class="line"><span class="prompt">root@cyber</span>:/secure$ scan --live</div>
+            <div class="line green">[OK] Firewall sincronizado</div>
+            <div class="line green">[OK] IDS activo en 7 nodos</div>
+            <div class="line yellow">[WARN] Intento de acceso anómalo</div>
+            <div class="line red">[BLOCKED] IP 192.168.47.89 neutralizada</div>
+            <div class="line green">[OK] Sistema protegido</div>
+          </div>
         </div>
       </div>
+    </section>
 
-      <div id="terminal-panel" class="terminal-panel">
-        <div class="panel-header">
-          <span class="dot red"></span>
-          <span class="dot yellow"></span>
-          <span class="dot green"></span>
-          <span class="panel-title">secure://network</span>
+    <section id="view-security" class="view-panel">
+      <div class="panel-view">
+        <h2>Seguridad</h2>
+        <p>Los sensores de amenaza están en vigilancia constante. Ninguna anomalía ha superado el umbral de riesgo.</p>
+        <div class="mini-list">
+          <span>Antimalware: activo</span>
+          <span>Firewall: sincronizado</span>
+          <span>Backup: presente</span>
         </div>
+      </div>
+    </section>
 
-        <div id="terminal-body" class="terminal-body" aria-live="polite">
-          <div class="line"><span class="prompt">root@cyber</span>:/secure$ scan --live</div>
-          <div class="line green">[OK] Firewall sincronizado</div>
-          <div class="line green">[OK] IDS activo en 7 nodos</div>
-          <div class="line yellow">[WARN] Intento de acceso anómalo</div>
-          <div class="line red">[BLOCKED] IP 192.168.47.89 neutralizada</div>
-          <div class="line green">[OK] Sistema protegido</div>
+    <section id="view-maps" class="view-panel">
+      <div class="panel-view">
+        <h2>Mapas</h2>
+        <p>Red global protegida. 12 regiones con trazado seguro, 3 nodos críticos en modo aislado.</p>
+        <div class="map-grid">
+          <span></span><span></span><span></span>
+          <span></span><span class="core"></span><span></span>
+          <span></span><span></span><span></span>
         </div>
+      </div>
+    </section>
+
+    <section id="view-logs" class="view-panel">
+      <div class="panel-view">
+        <h2>Logs</h2>
+        <ul>
+          <li>[OK] Detección en tiempo real</li>
+          <li>[OK] Segmentación de red</li>
+          <li>[WARN] Escaneo externo bloqueado</li>
+          <li>[OK] Respuesta automática aplicada</li>
+        </ul>
       </div>
     </section>
 
@@ -126,6 +164,8 @@
     const logsButton = document.getElementById('logs-btn');
     const terminalPanel = document.getElementById('terminal-panel');
     const terminalBody = document.getElementById('terminal-body');
+    const navButtons = document.querySelectorAll('.nav-btn');
+    const viewPanels = document.querySelectorAll('.view-panel');
 
     function appendLog(message, type = '') {
       const line = document.createElement('div');
@@ -173,6 +213,18 @@
       if (!isCollapsed) {
         terminalPanel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
       }
+    });
+
+    navButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        const target = button.dataset.view;
+
+        navButtons.forEach((btn) => btn.classList.toggle('active', btn === button));
+        viewPanels.forEach((panel) => {
+          const isActive = panel.id === `view-${target}`;
+          panel.classList.toggle('active-view', isActive);
+        });
+      });
     });
   </script>
 </body>
