@@ -1,16 +1,118 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Cybersecurity dashboard mockup with neon aesthetic">
   <link rel="stylesheet" href="styles.css">
-  <title>Vanilla JavaScript App</title>
+  <title>CyberShield // Secure System</title>
 </head>
 
 <body>
-  <main>
-    <h1>Vanilla JavaScript App</h1>
+  <div class="bg-grid"></div>
+
+  <main class="dashboard">
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-mark">&lt;/&gt;</span>
+        <span>CYBERSHIELD</span>
+      </div>
+
+      <nav class="nav">
+        <a href="#">Inicio</a>
+        <a href="#">Seguridad</a>
+        <a href="#">Mapas</a>
+        <a href="#">Logs</a>
+      </nav>
+
+      <button class="status-pill">Sistema activo</button>
+    </header>
+
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">MODO DEFENSA / 24/7</p>
+        <h1>
+          Amenazas detectadas.
+          <span>Neutralizadas.</span>
+        </h1>
+
+        <p class="lead">
+          Protegemos tu infraestructura con analítica en tiempo real, detección inteligente y
+          respuesta automática ante cualquier riesgo cibernético.
+        </p>
+
+        <div class="cta-row">
+          <button class="primary-btn">Ejecutar escaneo</button>
+          <button class="secondary-btn">Ver logs</button>
+        </div>
+
+        <div class="stats">
+          <article>
+            <strong>99.9%</strong>
+            <span>Firewall</span>
+          </article>
+          <article>
+            <strong>12.4k</strong>
+            <span>Eventos / min</span>
+          </article>
+          <article>
+            <strong>3</strong>
+            <span>Brechas bloqueadas</span>
+          </article>
+        </div>
+      </div>
+
+      <div class="terminal-panel">
+        <div class="panel-header">
+          <span class="dot red"></span>
+          <span class="dot yellow"></span>
+          <span class="dot green"></span>
+          <span class="panel-title">secure://network</span>
+        </div>
+
+        <div class="terminal-body">
+          <div class="line"><span class="prompt">root@cyber</span>:/secure$ scan --live</div>
+          <div class="line green">[OK] Firewall sincronizado</div>
+          <div class="line green">[OK] IDS activo en 7 nodos</div>
+          <div class="line yellow">[WARN] Intento de acceso anómalo</div>
+          <div class="line red">[BLOCKED] IP 192.168.47.89 neutralizada</div>
+          <div class="line green">[OK] Sistema protegido</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cards">
+      <article class="card">
+        <p class="card-label">Threat Map</p>
+        <h2>12 regiones</h2>
+        <div class="mini-bars">
+          <span style="height: 42%"></span>
+          <span style="height: 64%"></span>
+          <span style="height: 38%"></span>
+          <span style="height: 82%"></span>
+          <span style="height: 56%"></span>
+          <span style="height: 92%"></span>
+        </div>
+      </article>
+
+      <article class="card">
+        <p class="card-label">Autenticación</p>
+        <h2>2FA activa</h2>
+        <div class="status-row">
+          <span class="status-dot"></span>
+          <span>Verificación reforzada</span>
+        </div>
+      </article>
+
+      <article class="card">
+        <p class="card-label">Containment</p>
+        <h2>100% aislado</h2>
+        <div class="progress">
+          <span></span>
+        </div>
+      </article>
+    </section>
   </main>
 </body>
 
