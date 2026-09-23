@@ -82,7 +82,7 @@
             <div class="line green">[OK] Firewall sincronizado</div>
             <div class="line green">[OK] IDS activo en 7 nodos</div>
             <div class="line yellow">[WARN] Intento de acceso anómalo</div>
-            <div class="line red">[BLOCKED] IP 192.168.47.89 neutralizada</div>
+            <div class="line red" id="threat-ip">[BLOCKED] IP 192.168.47.89 neutralizada</div>
             <div class="line green">[OK] Sistema protegido</div>
           </div>
         </div>
@@ -164,8 +164,21 @@
     const logsButton = document.getElementById('logs-btn');
     const terminalPanel = document.getElementById('terminal-panel');
     const terminalBody = document.getElementById('terminal-body');
+    const threatIp = document.getElementById('threat-ip');
     const navButtons = document.querySelectorAll('.nav-btn');
     const viewPanels = document.querySelectorAll('.view-panel');
+
+    async function loadClientIp() {
+      try {
+        const response = await fetch('https://api.ipify.org?format=json');
+        const data = await response.json();
+        if (data && data.ip) {
+          threatIp.textContent = `[BLOCKED] IP ${data.ip} neutralizada`;
+        }
+      } catch (error) {
+        threatIp.textContent = '[BLOCKED] IP del cliente no disponible';
+      }
+    }
 
     function appendLog(message, type = '') {
       const line = document.createElement('div');
@@ -226,6 +239,8 @@
         });
       });
     });
+
+    loadClientIp();
   </script>
 </body>
 
