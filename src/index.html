@@ -186,8 +186,8 @@
     const navButtons = document.querySelectorAll('.nav-btn');
     const viewPanels = document.querySelectorAll('.view-panel');
 
-    async function loadClientInfo() {
-      const timeText = new Date().toLocaleString('es-ES', {
+    function updateClock() {
+      clientTime.textContent = new Date().toLocaleString('es-ES', {
         day: '2-digit',
         month: '2-digit',
         year: 'numeric',
@@ -195,27 +195,40 @@
         minute: '2-digit',
         second: '2-digit'
       });
-      clientTime.textContent = timeText;
+    }
+
+    async function loadClientInfo() {
+      updateClock();
+      setInterval(updateClock, 1000);
+
+      let ipValue = 'No disponible';
 
       try {
-        const ipResponse = await fetch('https://api.ipify.org?format=json');
+        const ipResponse = await fetch('https://api.ipify.org?format=json', { mode: 'cors' });
         const ipData = await ipResponse.json();
-        const ipValue = ipData && ipData.ip ? ipData.ip : 'No disponible';
+        if (ipData && ipData.ip) {
+          ipValue = ipData.ip;
+          clientIp.textContent = ipValue;
+          threatIp.textContent = `[BLOCKED] IP ${ipValue} neutralizada`;
+        }
+      } catch (error) {
+        clientIp.textContent = 'No disponible';
+        threatIp.textContent = '[BLOCKED] IP del cliente no disponible';
+      }
 
-        clientIp.textContent = ipValue;
-        threatIp.textContent = `[BLOCKED] IP ${ipValue} neutralizada`;
-
-        const locationResponse = await fetch('https://ipapi.co/json/');
+      try {
+        const locationResponse = await fetch('https://ipapi.co/json/', { mode: 'cors' });
         const locationData = await locationResponse.json();
         const locationValue = locationData && (locationData.city || locationData.region || locationData.country_name)
-          ? `${locationData.city || 'Desconocida'}, ${locationData.region || ''}, ${locationData.country_name || ''}`.replace(/,\s*$/, '').replace(/,\s+,/g, ',').trim()
+          ? `${locationData.city || 'Ubicación'}, ${locationData.region || ''}, ${locationData.country_name || ''}`
+              .replace(/,\s*$/, '')
+              .replace(/,\s+,/g, ',')
+              .trim()
           : 'Ubicación no disponible';
 
         clientLocation.textContent = locationValue;
       } catch (error) {
-        clientIp.textContent = 'No disponible';
-        clientLocation.textContent = 'No disponible';
-        threatIp.textContent = '[BLOCKED] IP del cliente no disponible';
+        clientLocation.textContent = 'Ubicación no disponible';
       }
     }
 
